@@ -1,12 +1,7 @@
 const router = require('express').Router();
 const { BlogPost, Author, Comment } = require('../models');
-// const withAuth = require('../utils/auth');
+const withAuth = require('../utils/auth');
 
-// router.get('/', async (req, res) => {
-//   // res.send("Hello! We are in the root of our web app!");
-//   res.render('homepage');
-
-// });
 
 router.get('/', async (req, res) => {
   try {
@@ -23,7 +18,6 @@ router.get('/', async (req, res) => {
     // Serialize data so the template can read it
     const blogposts = blogPostData.map((blog) => blog.get({ plain: true }));
 
-    console.log("In Get All Blog Posts. Existing Blog Posts: ", blogposts);
     // Pass serialized data and session flag into template
     res.render('homepage', { 
       blogposts, 
@@ -34,27 +28,30 @@ router.get('/', async (req, res) => {
   }
 });
 
-// router.get('/project/:id', async (req, res) => {
-//   try {
-//     const projectData = await Project.findByPk(req.params.id, {
-//       include: [
-//         {
-//           model: User,
-//           attributes: ['name'],
-//         },
-//       ],
-//     });
+router.get('/blog/:id', async (req, res) => {
+  try {
+    const blogPostData = await BlogPost.findByPk(req.params.id, {
+      include: [
+        {
+          model: Author,
+          attributes: ['name'],
+        },
+      ],
+    });
 
-//     const project = projectData.get({ plain: true });
+    // Serialize data for handlebars template
+    const blog = blogPostData.get({ plain: true });
 
-//     res.render('project', {
-//       ...project,
-//       logged_in: req.session.logged_in
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    console.log("Blog Data: ", blog);
+
+    res.render('blogpost', {
+      ...blog,
+      logged_in: req.session.logged_in
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // // Use withAuth middleware to prevent access to route
 // router.get('/profile', withAuth, async (req, res) => {
