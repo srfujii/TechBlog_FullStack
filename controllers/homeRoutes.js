@@ -1,37 +1,38 @@
 const router = require('express').Router();
-// const { Project, User } = require('../models');
+const { BlogPost, Author, Comment } = require('../models');
 // const withAuth = require('../utils/auth');
 
-router.get('/', async (req, res) => {
-  // res.send("Hello! We are in the root of our web app!");
-  res.render('homepage');
-
-});
-
 // router.get('/', async (req, res) => {
-//   try {
-//     // Get all projects and JOIN with user data
-//     const projectData = await Project.findAll({
-//       include: [
-//         {
-//           model: User,
-//           attributes: ['name'],
-//         },
-//       ],
-//     });
+//   // res.send("Hello! We are in the root of our web app!");
+//   res.render('homepage');
 
-//     // Serialize data so the template can read it
-//     const projects = projectData.map((project) => project.get({ plain: true }));
-
-//     // Pass serialized data and session flag into template
-//     res.render('homepage', { 
-//       projects, 
-//       logged_in: req.session.logged_in 
-//     });
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
 // });
+
+router.get('/', async (req, res) => {
+  try {
+    // Get all blog posts and JOIN with author data
+    const blogPostData = await BlogPost.findAll({
+      include: [
+        {
+          model: Author,
+          attributes: ['name'],
+        },
+      ],
+    });
+
+    // Serialize data so the template can read it
+    const blogposts = blogPostData.map((blog) => blog.get({ plain: true }));
+
+    console.log("In Get All Blog Posts. Existing Blog Posts: ", blogposts);
+    // Pass serialized data and session flag into template
+    res.render('homepage', { 
+      blogposts, 
+      logged_in: req.session.logged_in 
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 // router.get('/project/:id', async (req, res) => {
 //   try {

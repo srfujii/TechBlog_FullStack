@@ -1164,6 +1164,10 @@ form [type='radio'] {
   display: inline-block;
 }
 
+.outer-container {
+  width: 100%;
+}
+
 .container {
   width: 85%;
   max-width: 1200px;

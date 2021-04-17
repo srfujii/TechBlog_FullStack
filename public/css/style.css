@@ -2,6 +2,14 @@ header, .project:not(:last-child) {
   border-bottom: 1px solid #ccc;
 }
 
+h2 {
+  color: #193875;
+}
+
+h2 a {
+  color: #193875;
+}
+
 nav a {
   font-weight: 900;
   font-size: 150%;

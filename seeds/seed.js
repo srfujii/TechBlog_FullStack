@@ -20,10 +20,6 @@ const seedDatabase = async () => {
     returning: true,
   });
 
-  // for (const author of authorData) {
-  //   await Author.create({ ...author });
-  // }
-
   process.exit(0);
 };
 
