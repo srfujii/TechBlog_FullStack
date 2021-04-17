@@ -2,6 +2,21 @@ header, .project:not(:last-child) {
   border-bottom: 1px solid #ccc;
 }
 
+nav a {
+  font-weight: 900;
+  font-size: 150%;
+  color: white;
+  background-color: #142340;
+  padding: 8px;
+  border-radius: 15%;
+}
+
+nav a:hover {
+  background-color: #59DFEA;
+  color: #142340;
+  text-decoration: none;
+}
+
 .no-button {
   background: none;
   border: none;
@@ -21,4 +36,24 @@ header, .project:not(:last-child) {
   color: #056605;
   font-weight: bold;
   margin-left: -5px;
+}
+
+.jumbotron {
+  background-image: url('../img/techbg.png');
+  width: 100%;
+  height: 100px;
+}
+
+.site {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.site-content {
+  flex: 1;
+}
+
+.footer {
+  flex-shrink: 0;
 }
