@@ -911,6 +911,10 @@ a:hover {
   color: #000000 !important;
 }
 
+.text-darkblue {
+  color: #193875;
+}
+
 .text-link {
   color: #1b89bc !important;
 }
