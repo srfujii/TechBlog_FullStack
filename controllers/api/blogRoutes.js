@@ -23,24 +23,71 @@ router.post('/', withAuth, async (req, res) => {
   }
 });
 
-// router.delete('/:id', withAuth, async (req, res) => {
-//   try {
-//     const projectData = await Project.destroy({
-//       where: {
-//         id: req.params.id,
-//         user_id: req.session.user_id,
-//       },
-//     });
+router.get('/edit/:id', withAuth, async (req, res) => {
+  try {
+    console.log("In /edit/:id.... req.params.id = ", req.params.id);
+    const blogPostData = await BlogPost.findByPk(req.params.id);
 
-//     if (!projectData) {
-//       res.status(404).json({ message: 'No project found with this id!' });
-//       return;
-//     }
+    // Serialize data for handlebars template
+    const blog = blogPostData.get({ plain: true });
 
-//     res.status(200).json(projectData);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
+    console.log("Blog Data: ", blog);
+
+    res.render('editblogpost', {
+      ...blog,
+      logged_in: req.session.logged_in
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+// Updates book based on its isbn
+router.put('/edit/:id', withAuth, async (req, res) => {
+  // Calls the update method on the Blog Post model
+  try{
+    const blogPostData = await BlogPost.update(
+        {
+          // All the fields you can update and the data attached to the request body.
+          blog_title: req.body.blog_title,
+          blog_content: req.body.blog_content,
+        },
+        {
+          // Gets the post based on the blog post id given in the request parameters
+          where: {
+            id: req.params.id,
+          },
+        }
+    );
+    
+    if (!blogPostData) {
+        res.status(404).json({ message: 'No blog post found with this id!' });
+        return;
+    }
+    
+    res.status(200).json(blogPostData);
+  }  catch (err) {
+      res.status(500).json(err);
+  }
+});
+
+router.delete('/edit/:id', withAuth, async (req, res) => {
+  try {
+    const blogPostData = await BlogPost.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+
+    if (!blogPostData) {
+      res.status(404).json({ message: 'No blog post found with this id!' });
+      return;
+    }
+
+    res.status(200).json(blogPostData);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 module.exports = router;
