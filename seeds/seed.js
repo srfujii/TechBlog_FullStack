@@ -9,6 +9,7 @@ const seedDatabase = async () => {
   await sequelize.sync({ force: true });
 
   const authors = await Author.bulkCreate(authorData, {
+    individualHooks: true,
     returning: true,
   });
 

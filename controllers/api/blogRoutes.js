@@ -1,19 +1,27 @@
 const router = require('express').Router();
-// const { Project } = require('../../models');
-// const withAuth = require('../../utils/auth');
+const { BlogPost } = require('../../models');
+const withAuth = require('../../utils/auth');
 
-// router.post('/', withAuth, async (req, res) => {
-//   try {
-//     const newProject = await Project.create({
-//       ...req.body,
-//       user_id: req.session.user_id,
-//     });
+// /api/blog/
 
-//     res.status(200).json(newProject);
-//   } catch (err) {
-//     res.status(400).json(err);
-//   }
-// });
+router.get('/', withAuth, async (req, res) => {
+  // If the user is logged in, render the create blog page
+    res.render('createblogpost', {logged_in: true});  
+    return;
+});
+
+router.post('/', withAuth, async (req, res) => {
+  try {
+    const newBlogPost = await BlogPost.create({
+      ...req.body,
+      author_id: req.session.user_id,
+    });
+
+    res.status(200).json(newBlogPost);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
 
 // router.delete('/:id', withAuth, async (req, res) => {
 //   try {
