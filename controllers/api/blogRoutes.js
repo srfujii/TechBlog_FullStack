@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { BlogPost } = require('../../models');
+const { BlogPost, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // /api/blog/
@@ -18,6 +18,24 @@ router.post('/', withAuth, async (req, res) => {
     });
 
     res.status(200).json(newBlogPost);
+  } catch (err) {
+    res.status(400).json(err);
+  }
+});
+
+router.post('/:id/comment/', withAuth, async (req, res) => {
+  try {
+    console.log("Comment content: ", req.body.comment_content);
+    console.log("Author Id: ", req.session.user_id);
+    console.log("Blog Id: ", req.params.id);
+
+    const newComment = await Comment.create({
+      comment_content: req.body.comment_content,
+      blog_id: req.params.id,
+      author_id: req.session.user_id,
+    });
+
+    res.status(200).json(newComment);
   } catch (err) {
     res.status(400).json(err);
   }
