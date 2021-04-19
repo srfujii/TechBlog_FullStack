@@ -36,6 +36,10 @@ router.get('/blog/:id', async (req, res) => {
           model: Author,
           attributes: ['name'],
         },
+        {
+          model: Comment,
+          attributes: ['comment_content', 'date_created', 'author_id'],
+        },
       ],
     });
 

@@ -26,6 +26,13 @@ Comment.init(
         key: 'id',
       },
     },
+    author_id: {
+      type: DataTypes.INTEGER,
+      references: {
+        model: 'author',
+        key: 'id',
+      },
+    },
   },
   {
     sequelize,
