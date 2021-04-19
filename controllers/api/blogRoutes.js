@@ -25,10 +25,6 @@ router.post('/', withAuth, async (req, res) => {
 
 router.post('/:id/comment/', withAuth, async (req, res) => {
   try {
-    console.log("Comment content: ", req.body.comment_content);
-    console.log("Author Id: ", req.session.user_id);
-    console.log("Blog Id: ", req.params.id);
-
     const newComment = await Comment.create({
       comment_content: req.body.comment_content,
       blog_id: req.params.id,
@@ -43,13 +39,10 @@ router.post('/:id/comment/', withAuth, async (req, res) => {
 
 router.get('/edit/:id', withAuth, async (req, res) => {
   try {
-    console.log("In /edit/:id.... req.params.id = ", req.params.id);
     const blogPostData = await BlogPost.findByPk(req.params.id);
 
     // Serialize data for handlebars template
     const blog = blogPostData.get({ plain: true });
-
-    console.log("Blog Data: ", blog);
 
     res.render('editblogpost', {
       ...blog,

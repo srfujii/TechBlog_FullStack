@@ -39,14 +39,19 @@ router.get('/blog/:id', async (req, res) => {
         {
           model: Comment,
           attributes: ['comment_content', 'date_created', 'author_id'],
+          include: [
+            {
+              model: Author,
+              attributes: ['name'],
+            }
+          ]
         },
       ],
     });
-
+    
     // Serialize data for handlebars template
     const blog = blogPostData.get({ plain: true });
 
-    console.log("Blog Data: ", blog);
 
     res.render('blogpost', {
       ...blog,
@@ -68,8 +73,6 @@ router.get('/dashboard', withAuth, async (req, res) => {
 
     const author = authorData.get({ plain: true });
 
-    console.log("Author Data for Dashboard: ", author);
-
     res.render('dashboard', {
       ...author,
       logged_in: true
@@ -85,7 +88,6 @@ router.get('/login', (req, res) => {
     res.redirect('/dashboard');
     return;
   }
-
   res.render('login');
 });
 
@@ -95,7 +97,6 @@ router.get('/signup', (req, res) => {
     res.redirect('/dashboard');
     return;
   }
-
   res.render('signup');
 });
 

@@ -11,6 +11,7 @@ BlogPost.belongsTo(Author, {
   foreignKey: 'author_id'
 });
 
+
 BlogPost.hasMany(Comment, {
     foreignKey: 'blog_id',
     onDelete: 'CASCADE'
@@ -19,6 +20,7 @@ BlogPost.hasMany(Comment, {
 Comment.belongsTo(BlogPost, {
     foreignKey: 'blog_id'
 })
+
 
 Author.hasMany(Comment, {
   foreignKey: 'author_id'
