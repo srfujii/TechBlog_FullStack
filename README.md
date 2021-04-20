@@ -20,7 +20,9 @@
  
   ## Installation
 
-  This app is deployed live on heroku, and you can see it live at:
+  This app is deployed live on heroku, and you can see it live at: 
+  
+  [Live Deployed Application](https://cryptic-gorge-79712.herokuapp.com/)
   
   To install locally, do the following: 
   
